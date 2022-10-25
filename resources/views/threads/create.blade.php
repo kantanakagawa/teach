@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container lg:w-1/2 md:w-4/5 w-11/12 mx-auto mt-8 px-8 bg-white shadow-md">
-        <h2 class="text-center text-lg font-bold pt-6 tracking-widest">スレッド登録</h2>
+        <h2 class="text-center text-lg font-bold pt-6 tracking-widest">新規スレッド作成</h2>
 
         @if ($errors->any())
             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 my-2" role="alert">
@@ -40,7 +40,7 @@
                 </label>
                 <input type="file" name="image" class="border-gray-300">
             </div>
-            <input type="submit" value="登録"
+            <input type="submit" value="投稿"
                 class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
         </form>
     </div>

@@ -65,7 +65,7 @@ class ThreadController extends Controller
         }
 
         return redirect()
-            ->route('posts.show', $post);
+            ->route('threads.show', $post);
     
     }
 
@@ -77,7 +77,9 @@ class ThreadController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Thread::find($id);
+
+        return view('threads.show', compact('post'));
     }
 
     /**
