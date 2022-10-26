@@ -17,7 +17,9 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        return view('threads.index');
+        // return view('threads.index');
+        $threads = Thread::latest()->simplePaginate(4);
+        return view('threads.index', compact('threads'));
     }
 
     /**
