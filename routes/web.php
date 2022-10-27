@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('threads', ThreadController::class)
-->only(['create', 'store', 'edit', 'update', 'destroy'])
+->only([ 'store', 'edit', 'destroy','create', 'update'])
 ->middleware('auth');
 
 Route::resource('threads', ThreadController::class)
