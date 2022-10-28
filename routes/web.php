@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\MessageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,5 +28,9 @@ Route::resource('threads', ThreadController::class)
 
 Route::resource('threads', ThreadController::class)
 ->only(['show', 'index']);
+
+Route::resource('threads.messages', MessageController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
 
 require __DIR__.'/auth.php';

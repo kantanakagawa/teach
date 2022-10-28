@@ -1,8 +1,19 @@
 <x-app-layout>
-
     <div class="container">
-        {{ __('threads.index') }}
         <div class="row justify-content-center">
+            <x-flash-message :message="session('notice')" />
+            @if ($errors->any())
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 my-2" role="alert">
+                    <p>
+                        <b>{{ count($errors) }}件のエラーがあります。</b>
+                    </p>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-8">
                 {{ $threads->links() }}
             </div>
@@ -19,14 +30,13 @@
                             <p class="card-text">{{ $thread->body }}</p>
                         </div>
                         <div class="card-footer">
-                            <form method="POST" action="" class="mb-5">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="thread-first-content">内容</label>
-                                    <textarea name="body" class="form-control" id="thread-first-content" rows="3" required></textarea>
+                            @auth
+                                <hr class="my-4">
+                                <div class="flex justify-end">
+                                    <a href="{{ route('threads.messages.store', $thread) }}"
+                                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント登録</a>
                                 </div>
-                                <button type="submit" class="btn btn-primary">書き込む</button>
-                            </form>
+                            @endauth
                             <a href="#">全部読む</a>
                             <a href="#">最新50</a>
                             <a href="#">1-100</a>
@@ -38,7 +48,6 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                {{-- @include('layouts.flash-message') --}}
                 <div class="container lg:w-1/2 md:w-4/5 w-11/12 mx-auto mt-8 px-8 bg-white shadow-md">
                     <h2 class="text-center text-lg font-bold pt-6 tracking-widest">新規スレッド作成</h2>
 
