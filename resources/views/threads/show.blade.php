@@ -36,7 +36,28 @@
                 <h3>{{ $thread->name }}</h3>
             </div>
             <div class="col-md-10 mb-3">
-                <a href="{{ route('threads.index') }}" class="btn btn-primary">掲示板に戻る</a>
+                <a href="{{ route('threads.index') }}"
+                    class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+                    <span
+                        class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
+                    <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
+                        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </span>
+                    <span
+                        class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+                        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </span>
+                    <span
+                        class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">掲示板に戻る</span>
+                </a>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -44,7 +65,6 @@
                 <section class="font-sans break-normal text-gray-900 ">
                     @foreach ($messages as $message)
                         <div class="my-2">
-                            <span class="font-bold mr-3">{{ $message->user->name }}</span>
                             <span class="text-sm">{{ $message->created_at }}</span>
                             <p>{!! nl2br(e($message->body)) !!}</p>
                             <div class="flex justify-end text-center">
@@ -69,23 +89,17 @@
                 </section>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card">
-                    <h5 class="card-header">レスを投稿する</h5>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('threads.messages.store', $thread->id) }}"
-                            class="mb-4">
-                            @csrf
-                            <div class="form-group">
-                                <label for="thread-first-content">内容</label>
-                                <textarea name="body" class="form-control" id="thread-first-content" rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">書き込む</button>
-                        </form>
-                    </div>
+        <div class="sm:col-span-2">
+            <label for="message" class="inline-block text-gray-800 text-sm sm:text-base mb-2">コメントを投稿する</label>
+            <form method="POST" action="{{ route('threads.messages.store', $thread->id) }}" class="mb-4">
+                @csrf
+                <textarea name="body"
+                    class="w-full h-64 bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"></textarea>
+                <div class="sm:col-span-2 flex justify-between items-center">
+                    <button
+                        class="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">投稿</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </x-app-layout>
