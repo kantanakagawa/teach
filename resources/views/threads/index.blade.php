@@ -16,7 +16,6 @@
             @endif
             <div class="col-md-8">
                 {{ $threads->links() }}
-                <a href="{{ route('threads.index') }}">リロード</a>
             </div>
         </div>
 
