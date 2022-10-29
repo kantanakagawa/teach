@@ -33,14 +33,12 @@
                             @auth
                                 <hr class="my-4">
                                 <div class="flex justify-end">
-                                    <a href="{{ route('threads.messages.store', $thread) }}"
+                                    <a href="{{ route('threads.messages.create', $thread) }}"
                                     class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント登録</a>
                                 </div>
                             @endauth
-                            <a href="#">全部読む</a>
-                            <a href="#">最新50</a>
-                            <a href="#">1-100</a>
-                            <a href="#">リロード</a>
+                            <a href="{{ route('threads.show', $thread->id) }}">全部読む</a>
+                            <a href="{{ route('threads.index') }}">リロード</a>
                         </div>
                     </div>
                 </div>

@@ -96,4 +96,21 @@ class MessageController extends Controller
     {
         //
     }
+
+    // public function createNewMessage(array $data, string $thread_id)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $thread = $this->thread_repository->findById($thread_id);
+    //         $message = $thread->messages()->create($data);
+    //     } catch (Exception $error) {
+    //         DB::rollBack();
+    //         Log::error($error->getMessage());
+    //         throw new Exception($error->getMessage());
+    //     }
+    //     DB::commit();
+    //     return $message;
+
+
+    // }
 }
