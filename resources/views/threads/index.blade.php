@@ -27,16 +27,9 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $thread->title }}</h5>
-                            <p class="card-text">{{ $thread->body }}</p>
+                            <p class="card-text">{{ Str::limit($thread->body, 50) }}</p>
                         </div>
                         <div class="card-footer">
-                            @auth
-                                <hr class="my-4">
-                                <div class="flex justify-end">
-                                    <a href="{{ route('threads.messages.create', $thread) }}"
-                                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント登録</a>
-                                </div>
-                            @endauth
                             <a href="{{ route('threads.show', $thread->id) }}">全部読む</a>
                             <a href="{{ route('threads.index') }}">リロード</a>
                         </div>

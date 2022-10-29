@@ -12,7 +12,7 @@
                 {{ $thread->created_at }}
             </p>
             <img src="{{ $thread->image_url }}" alt="" class="mb-4">
-            <p class="text-gray-700 text-base">{!! nl2br(e($thread->body)) !!}</p>
+            <p class="text-gray-700 text-base break-all">{!! nl2br(e($thread->body)) !!}</p>
         </article>
         <div class="flex flex-row text-center my-4">
             @can('update', $thread)
@@ -41,14 +41,32 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-10 mb-5">
-                @foreach ($thread->messages as $message)
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <p>{{ $loop->iteration }} {{ $message->user->name }} {{ $message->created_at }}</p>
-                            <p class="mb-0">{{ $message->body }}</p>
+                <section class="font-sans break-normal text-gray-900 ">
+                    @foreach ($messages as $message)
+                        <div class="my-2">
+                            <span class="font-bold mr-3">{{ $message->user->name }}</span>
+                            <span class="text-sm">{{ $message->created_at }}</span>
+                            <p>{!! nl2br(e($message->body)) !!}</p>
+                            <div class="flex justify-end text-center">
+                                @can('update', $message)
+                                    <a href="{{ route('threads.messages.edit', [$thread, $message]) }}"
+                                        class="text-sm bg-green-400 hover:bg-green-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                                @endcan
+                                @can('delete', $message)
+                                    <form action="{{ route('threads.messages.destroy', [$thread, $message]) }}"
+                                        method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" value="削除"
+                                            onclick="if(!confirm('削除しますか？')){return false};"
+                                            class="text-sm bg-red-400 hover:bg-red-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline w-20">
+                                    </form>
+                                @endcan
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                        <hr>
+                    @endforeach
+                </section>
             </div>
         </div>
         <div class="row justify-content-center">

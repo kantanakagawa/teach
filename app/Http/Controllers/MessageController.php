@@ -69,9 +69,9 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Thread $thread, Message $message)
     {
-        //
+        return view('messages.edit', compact('thread', 'message'));
     }
 
     /**
@@ -81,9 +81,24 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Thread $thread, Message $message)
     {
-        //
+        if ($request->user()->cannot('update', $message)) {
+            return redirect()->route('threads.show', $thread)
+                ->withErrors('自分のコメント以外は更新できません');
+        }
+
+        $message->fill($request->all());
+
+        try {
+            // 更新
+            $message->save();
+
+            return redirect()->route('threads.show', $thread)
+                ->with('notice', 'コメントを更新しました');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors($e->getMessage());
+        }
     }
 
     /**
@@ -92,9 +107,16 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Thread $thread, Message $message)
     {
-        //
+        try {
+            $message->delete();
+
+            return redirect()->route('threads.show', $thread)
+                ->with('notice', 'コメントを削除しました');
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     // public function createNewMessage(array $data, string $thread_id)

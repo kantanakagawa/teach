@@ -65,6 +65,7 @@ class ThreadController extends Controller
                 return back()->withInput()->withErrors($e->getMessage());
             }
         }
+        $post->save();
         return redirect()
             ->route('threads.index', $post)
             ->with('notice', '掲示板を作成しました。');
@@ -77,9 +78,10 @@ class ThreadController extends Controller
      */
     public function show($id)
     {
-        $thread = Thread::find($id);
+        $thread = Thread::with(['user'])->find($id);
+        $messages = $thread->messages()->latest()->get()->load(['user']);
 
-        return view('threads.show', compact('thread'));
+        return view('threads.show', compact('thread', 'messages'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -91,27 +93,7 @@ class ThreadController extends Controller
     {
         $thread = Thread::find($id);
 
-        // トランザクション開始
-        DB::beginTransaction();
-        try {
-            $thread->delete();
-
-            // 画像削除
-            if (!Storage::delete('images/posts/' . $thread->image)) {
-                // 例外を投げてロールバックさせる
-                throw new \Exception('画像ファイルの削除に失敗しました。');
-            }
-
-            // トランザクション終了(成功)
-            DB::commit();
-        } catch (\Exception $e) {
-            // トランザクション終了(失敗)
-            DB::rollback();
-            return back()->withInput()->withErrors($e->getMessage());
-        }
-
-        return redirect()->route('threads.edit', $thread)
-            ->with('notice', '記事を削除しました');
+        return view('threads.edit', compact('thread'));
     }
 
     /**
@@ -180,30 +162,27 @@ class ThreadController extends Controller
     public function destroy($id)
     {
         $thread = Thread::find($id);
-
         // トランザクション開始
         DB::beginTransaction();
         try {
             $thread->delete();
-
-            // 画像削除
-            if (!Storage::delete($thread->image_path)) {
-                // 例外を投げてロールバックさせる
-                throw new \Exception('画像ファイルの削除に失敗しました。');
+            if (!empty($thread->image)) {
+                // 画像削除
+                if (!Storage::delete($thread->image_path)) {
+                    // 例外を投げてロールバックさせる
+                    throw new \Exception('画像ファイルの削除に失敗しました。');
+                }
             }
-
             // トランザクション終了(成功)
             DB::commit();
+            return redirect()->route('threads.index')
+                ->with('notice', '記事を削除しました');
         } catch (\Exception $e) {
             // トランザクション終了(失敗)
             DB::rollback();
-            return back()->withErrors($e->getMessage());
+            return back()->withInput()->withErrors($e->getMessage());
         }
-
-        return redirect()->route('threads.index')
-            ->with('notice', '記事を削除しました');
     }
-
     private static function createFileName($file)
     {
         return date('YmdHis') . '_' . $file->getClientOriginalName();

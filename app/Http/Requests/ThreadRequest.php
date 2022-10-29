@@ -28,4 +28,12 @@ class ThreadRequest extends FormRequest
             'body' => 'required|string|max:20000',
         ];
     }
+
+            public function attributes()
+    {
+        return [
+            'body' => 'コメント',
+        ];
+    }
+
 }
