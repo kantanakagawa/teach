@@ -74,6 +74,7 @@
                             <textarea name="body" rows="10"
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full py-2 px-3"
                                 required>{{ old('body') }}</textarea>
+
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm mb-2" for="image">

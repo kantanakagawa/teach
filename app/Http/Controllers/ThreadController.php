@@ -17,7 +17,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $threads = Thread::with('user')->latest()->paginate(4);
+        $threads = Thread::with('user')->latest()->paginate(5);
         return view('threads.index', compact('threads'));
     }
 

@@ -1,1 +1,1 @@
-<h1 class="text-lg">Teacher</h1>
+<h1 class="text-lg"></h1>
