@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\MessageController;
+use App\Models\Check;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +25,17 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('threads', ThreadController::class)
-->only([ 'store', 'edit', 'destroy','create', 'update'])
-->middleware('auth');
+    ->only(['store', 'edit', 'destroy', 'create', 'update'])
+    ->middleware('auth');
 
 Route::resource('threads', ThreadController::class)
-->only(['show', 'index']);
+    ->only(['show', 'index']);
 
 Route::resource('threads.messages', MessageController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
-require __DIR__.'/auth.php';
+Route::resource('threads.check', CheckController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware(('auth'));
+require __DIR__ . '/auth.php';

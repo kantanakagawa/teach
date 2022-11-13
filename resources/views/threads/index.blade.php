@@ -26,8 +26,10 @@
                         <div class="col-md-8">
                             <div class="container lg:w-1/2 md:w-4/5 w-11/12 mx-auto mt-8 px-8 bg-white shadow-md">
                                 <div class="my-2">
+                                <input type="checkbox" name="check" value="check">
                                     <div class="my-2 m-2 p-5">
                                         <h1 class="text-xl font-bold">{{ Str::limit($thread->title, 20) }}</h1>
+                                        <a href = {{ $thread->url }}>{{ Str::limit($thread->url,50) }}</a>
                                         <p>{{ Str::limit($thread->body, 50) }}</p>
                                     </div>
                                     <div class="card-footer">
@@ -61,12 +63,20 @@
                         @csrf
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm mb-2" for="title">
-                                タイトル
                             </label>
                             <input type="text" name="title"
                                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full py-2 px-3"
                                 required placeholder="タイトル" value="{{ old('title') }}">
                         </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2" for="url">
+                            </label>
+                            <input type="url" name="url"
+                                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full py-2 px-3"
+                                required placeholder="URL" value="{{ old('url') }}">
+                        </div>
+
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm mb-2" for="body">
                                 本文

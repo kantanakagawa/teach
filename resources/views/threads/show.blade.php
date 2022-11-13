@@ -12,6 +12,7 @@
                 {{ $thread->created_at }}
             </p>
             <img src="{{ $thread->image_url }}" alt="" class="mb-4">
+            <a class="text-gray-700 text-base break-all" href = {{ $thread->url }}>{!! nl2br(e($thread->url)) !!}</a>
             <p class="text-gray-700 text-base break-all">{!! nl2br(e($thread->body)) !!}</p>
         </article>
         <div class="flex flex-row text-center my-4">

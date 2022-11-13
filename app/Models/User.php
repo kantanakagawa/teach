@@ -52,4 +52,9 @@ class User extends Authenticatable
         return $this->hasMany(Message::class);
     }
 
+    public function checks()
+    {
+        return $this->hasMany(Check::class);
+    }
+
 }

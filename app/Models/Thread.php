@@ -13,6 +13,7 @@ class Thread extends Model
     protected $fillable = [
         'title',
         'body',
+        'url'
     ];
 
     public function user()
