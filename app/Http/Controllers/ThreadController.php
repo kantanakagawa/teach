@@ -80,7 +80,8 @@ class ThreadController extends Controller
     {
         $thread = Thread::with(['user'])->find($id);
         $messages = $thread->messages()->latest()->get()->load(['user']);
-
+        // $check = $thread->checks()->latest()->get()->load(['user']);
+// ,'check'
         return view('threads.show', compact('thread', 'messages'));
     }
     /**

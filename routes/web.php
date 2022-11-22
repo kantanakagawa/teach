@@ -4,7 +4,6 @@ use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\MessageController;
-use App\Models\Check;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +34,7 @@ Route::resource('threads.messages', MessageController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
-Route::resource('threads.check', CheckController::class)
+Route::resource('threads.checks', CheckController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware(('auth'));
 require __DIR__ . '/auth.php';

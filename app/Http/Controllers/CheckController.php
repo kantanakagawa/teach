@@ -26,7 +26,7 @@ class CheckController extends Controller
      */
     public function create(Thread $thread)
     {
-        return view('check.create',compact('thread'));
+        return view('threads.index', compact('thread'));
     }
 
     /**

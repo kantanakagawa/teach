@@ -36,4 +36,10 @@ class Thread extends Model
         return 'images/posts/' . $this->image;
     }
 
+
+    public function checks()
+    {
+    return $this->hasOne(Check::class);
+    }
+
 }

@@ -26,10 +26,20 @@
                         <div class="col-md-8">
                             <div class="container lg:w-1/2 md:w-4/5 w-11/12 mx-auto mt-8 px-8 bg-white shadow-md">
                                 <div class="my-2">
-                                <input type="checkbox" name="check" value="check">
+
+                                    @auth
+                                        <form method="POST" action="{{ route('threads.checks.store', $thread->id) }}"
+                                            class="mb-4">
+                                            @csrf
+                                            <input type="check" name="check" required placeholder="check"
+                                                value="{{ old('check') }}">
+                                            <input type="checkbox" name="check">
+                                        </form>
+                                    @endauth
+
                                     <div class="my-2 m-2 p-5">
                                         <h1 class="text-xl font-bold">{{ Str::limit($thread->title, 20) }}</h1>
-                                        <a href = {{ $thread->url }}>{{ Str::limit($thread->url,50) }}</a>
+                                        <a href={{ $thread->url }}>{{ Str::limit($thread->url, 50) }}</a>
                                         <p>{{ Str::limit($thread->body, 50) }}</p>
                                     </div>
                                     <div class="card-footer">

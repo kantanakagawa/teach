@@ -27,4 +27,13 @@ class CheckRequest extends FormRequest
             //
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'check.required'  => trans('validation.required'),
+        ];
+    }
+
 }
