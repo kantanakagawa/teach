@@ -49,7 +49,10 @@ for thread_id in thread_id_list:
             thread_index = thread_id_list.index(thread_id)
             check = respons_2[thread_index]["check"]
             url = respons_1[user_index]["url"]
+            index = url.find("day")
+            url = url[index:]
             a[check].append(url)
+
 
 np_check_url = np.array([])
 
@@ -59,10 +62,11 @@ for i in a[1]:
 # print(np_check_url)
 
 url, counts = np.unique(np_check_url, return_counts=True)
+
 print(url)
 print(counts)
 
 x = url
 y = counts
-plt.bar(x, y)
+plt.barh(x, y)
 plt.show()
